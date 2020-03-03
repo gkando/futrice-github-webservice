@@ -1,6 +1,8 @@
 # Github Dependency Parser
 
-Github Dependency Parser is a node web service which outputs JavaScript file dependencies for a given repo.  
+Github Dependency Parser is a node web service which outputs JavaScript file dependencies for a given repo.
+
+Live Demo: https://futrice-github-webservice.herokuapp.com/
 
 ## Installation
 

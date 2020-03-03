@@ -38,6 +38,7 @@ service.post("/contents", checkURL, validFile, async (req, res, next) => {
 
 // check req.body for url
 function checkURL(req, res, next) {
+  console.log(req.body);
   if (req.body.url === undefined) {
     res.status(400).json({
       success: false,
