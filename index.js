@@ -16,7 +16,7 @@ server.use(express.json());
 server.get("/", (req, res) => {
   res.status(200).json({
     api: "running",
-    msg: "Github Dependency Parser API Status: UP!"
+    msg: "Github Dependency Parser API Status: Up"
   });
 });
 
