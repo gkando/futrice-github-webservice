@@ -1,6 +1,7 @@
 const express = require("express");
 const helmet = require("helmet");
 const server = express();
+const cors = require("cors");
 const service = require("./service/service.js");
 require("dotenv").config();
 
@@ -11,6 +12,7 @@ function logger(req, res, next) {
 
 server.use(logger);
 server.use(helmet());
+server.use(cors());
 server.use(express.json());
 
 server.get("/", (req, res) => {
