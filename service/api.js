@@ -1,7 +1,6 @@
 var url = require("url");
 const fetch = require("node-fetch");
 const acorn = require("acorn");
-const walk = require("acorn-walk");
 const jsx = require("acorn-jsx");
 
 const parser = acorn.Parser.extend(require("acorn-jsx")());
