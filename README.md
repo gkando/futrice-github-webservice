@@ -11,10 +11,37 @@ yarn
 #fire up the app on your local server
 yarn server  
 ```
-## Usage
-```node
-var foo = {1: 'bar', 2: 'bat'}
-```
+
+## Endpoints
+
+#### Service Routes
+
+| Method | Endpoint                | Access Control | Description                                  | 
+| ------ | ----------------------- | -------------- | -------------------------------------------- |
+| GET    | `/`                     | all users      | Returns API status.                          |
+| POST   | `/service/repo`         | all users      | Returns the contents of a github repository. |
+| POST   | `/service/contents`     | all users      | Returns the dependencies for a file.         |
+
+
+  **Data examples**
+
+  All fields must be sent in req.body.
+
+`POST` `/service/repo`
+  ```json
+  {
+      "url": "https://github.com/foo/js-project/"
+  }
+  ```
+
+`POST` `/service/contents`
+  ```json
+  {
+      "url": "https://api.github.com/repos/foo/js-project/contents/src/index.js",
+      "type": "file"
+  }
+  ```
+
 
 ## Testing
 ```bash
