@@ -4,6 +4,8 @@ Github Dependency Parser is a node web service which outputs JavaScript file dep
 
 Live Demo: https://futrice-github-webservice.herokuapp.com/
 
+Frontend repo: https://github.com/gkando/futrice-github-webservice-fe
+
 ## Installation
 
 ```bash
