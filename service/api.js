@@ -16,6 +16,7 @@ const getContents = (query, cb) => {
   })
     .then(r => r.json())
     .then(result => {
+      // console.log("RESULTS: ", result);
       return cb(result);
     })
     .catch(err => console.log(err));
@@ -80,7 +81,7 @@ const filterObj = (obj, keys) => {
 const getPackages = url => {
   const regex = /.*?\/contents/gm;
   let adr = url.match(regex) + "/package.json";
-  console.log(adr);
+  // console.log("PACKAGES:  ", adr);
   return fetch(adr, {
     headers: {
       accept: "application/json",
