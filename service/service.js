@@ -14,8 +14,8 @@ const { parseDir, getContents, parseFile, getPackages } = api;
 // (5) Filter out  packages from package.json
 // (6) Return list of file dependencies
 
-service.post("/repo", checkURL, (req, res, next) => {
-  getContents(req.body.url, parseDir).then(contents => {
+service.get("/repo", checkURL, (req, res, next) => {
+  getContents(req.query.url, parseDir).then(contents => {
     res.status(200).json({
       success: true,
       contents: contents
@@ -23,10 +23,10 @@ service.post("/repo", checkURL, (req, res, next) => {
   });
 });
 
-service.post("/contents", checkURL, validFile, async (req, res, next) => {
+service.get("/contents", checkURL, validFile, async (req, res, next) => {
   try {
-    const unfiltered = await getContents(req.body.url, parseFile);
-    const packages = await getPackages(req.body.url);
+    const unfiltered = await getContents(req.query.url, parseFile);
+    const packages = await getPackages(req.query.url);
     const dependencies = unfiltered.filter(f => !packages.includes(f));
     res.json(dependencies);
   } catch (err) {
@@ -34,12 +34,14 @@ service.post("/contents", checkURL, validFile, async (req, res, next) => {
   }
 });
 
-//middleware
+service.get("*", errHandler);
+
+//MIDDLEWARE//
 
 // check req.body for url
 function checkURL(req, res, next) {
-  console.log(req.body);
-  if (req.body.url === undefined) {
+  console.log(req.query.url);
+  if (req.query.url === undefined) {
     res.status(400).json({
       success: false,
       message: "Invalid URL"
@@ -51,7 +53,7 @@ function checkURL(req, res, next) {
 
 // check req.body for url
 function validFile(req, res, next) {
-  if (req.body.type !== "file") {
+  if (req.query.type !== "file") {
     res.status(400).json({
       success: false,
       message: "Invalid URL"
@@ -60,4 +62,13 @@ function validFile(req, res, next) {
     next();
   }
 }
+
+// router err handler
+function errHandler(req, res, next) {
+  res.status(404).json({
+    success: false,
+    message: "Route Does Not Exist."
+  });
+}
+
 module.exports = service;

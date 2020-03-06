@@ -15,14 +15,14 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 
+server.use("/service", service);
+
 server.get("/", (req, res) => {
   res.status(200).json({
     api: "running",
     msg: "Github Dependency Parser API Status: Up"
   });
 });
-
-server.use("/service", service);
 
 const port = process.env.PORT || 3300;
 server.listen(port, () => {
