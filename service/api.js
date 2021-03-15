@@ -2,46 +2,22 @@ var url = require("url");
 const fetch = require("node-fetch");
 const acorn = require("acorn");
 const jsx = require("acorn-jsx");
-const gql = require("./api/queries");
-
-require("dotenv").config();
-
-// flow
-//  (1) req => get n layers of repo
-//      (a) query api for overall repo structure
-//      (b) filter for folders & js files only => res
-//      (c) if repo layers = n+1 query recursively until end => res
-//  (2)
-//  (3) get contents
-
-const { TOKEN } = process.env;
 
 const parser = acorn.Parser.extend(require("acorn-jsx")());
 const opts = { sourceType: "module" };
 
-const variables = {
-  repo: "repo:gkando/futrice-github-webservice"
-};
-
-const getContents = adr => {
-
-  // var adr = query;
-  var query = gql.repo();
+const getContents = (query, cb) => {
+  var adr = getUrl(query);
   return fetch(adr, {
-    method: "POST",
     headers: {
       accept: "application/json",
-      "accept-language": "en-US,en;q=0.9",
-      Authorization: `bearer ${TOKEN}`
-    },
-    body: JSON.stringify({ query, variables })
-    // body: gql
+      "accept-language": "en-US,en;q=0.9"
+    }
   })
     .then(r => r.json())
     .then(result => {
-      console.log("RESULTS: ", result.data.search.edges);
-      return result.data.search.edges;
-      // return cb(result);
+      // console.log("RESULTS: ", result);
+      return cb(result);
     })
     .catch(err => console.log(err));
 };
