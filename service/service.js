@@ -14,6 +14,16 @@ const { parseDir, getContents, parseFile, getPackages } = api;
 // (5) Filter out  packages from package.json
 // (6) Return list of file dependencies
 
+service.get("/gql", (req, res, next) => {
+  var url = "https://api.github.com/graphql";
+  getContents(url).then(contents => {
+    res.status(200).json({
+      success: true,
+      contents: contents
+    });
+  });
+});
+
 service.get("/repo", checkURL, (req, res, next) => {
   getContents(req.query.url, parseDir).then(contents => {
     res.status(200).json({
